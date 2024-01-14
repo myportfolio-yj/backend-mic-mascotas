@@ -22,6 +22,7 @@ public class MascotaCrear {
   private String idRaza;
   private Boolean esterilizado;
   private List<String> alergias;
-  private List<String> vacunas;
+  private List<VacunaMascota> vacunas;
+  private List<String> clientes;
   private String foto;
 }

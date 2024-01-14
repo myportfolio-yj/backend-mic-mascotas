@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import org.veterinaria.dominio.modelo.Alergia.AlergiaSalida;
 import org.veterinaria.dominio.modelo.Especie.Especie;
 import org.veterinaria.dominio.modelo.Raza.Raza;
+import org.veterinaria.dominio.modelo.Recordatorio.Recordatorio;
 import org.veterinaria.dominio.modelo.Sexo.SexoSalida;
-import org.veterinaria.dominio.modelo.Vacuna.VacunaSalida;
 
 import java.util.List;
 
@@ -31,7 +31,9 @@ public class MascotaSalida {
   private Raza raza;
   private Boolean esterilizado;
   private List<AlergiaSalida> alergias;
-  private List<VacunaSalida> vacunas;
+  private List<VacunaMascotaSalida> vacunas;
+  private List<String> clientes;
+  private List<Recordatorio> recordatorios;
   private String foto;
   private String qr;
 }

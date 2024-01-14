@@ -52,6 +52,7 @@ public class MascotaRepositorio implements PanacheMongoRepository<MascotaEntidad
             p.setAlergias(mascota.getAlergias());
             p.setVacunas(mascota.getVacunas());
             p.setFoto(mascota.getFoto());
+            p.setClientes(mascota.getClientes());
             update(p);
             return p;
           })

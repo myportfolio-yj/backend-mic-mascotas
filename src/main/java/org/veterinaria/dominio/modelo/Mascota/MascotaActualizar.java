@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MascotaActualizar {
+  public List<String> clientes;
   private String nombre;
   private String apellido;
   private String fechaNacimiento;
@@ -22,6 +23,6 @@ public class MascotaActualizar {
   private String idRaza;
   private Boolean esterilizado;
   private List<String> alergias;
-  private List<String> vacunas;
+  private List<VacunaMascota> vacunas;
   private String foto;
 }

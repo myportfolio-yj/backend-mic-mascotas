@@ -16,14 +16,15 @@ public class MascotaEntidad extends PanacheMongoEntity {
   public String codIdentificacion;
   public String nombre;
   public String apellido;
-  public String fechaNacimiento;
-  public String idSexo;
-  public String idEspecie;
-  public String idRaza;
-  public Boolean esterilizado;
-  public List<String> alergias;
-  public List<String> vacunas;
-  public String foto;
-  public String qr;
+  private String fechaNacimiento;
+  private String idSexo;
+  private String idEspecie;
+  private String idRaza;
+  private Boolean esterilizado;
+  private List<String> alergias;
+  private List<VacunaMascotaEntidad> vacunas;
+  private List<String> clientes;
+  private String foto;
+  private String qr;
   private Boolean borrado;
 }
