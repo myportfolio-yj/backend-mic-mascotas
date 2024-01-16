@@ -12,9 +12,9 @@ import java.util.List;
 @Setter
 @MongoEntity(collection = "collect-Mascota")
 public class MascotaEntidad extends PanacheMongoEntity {
-  public String codIdentificacion;
-  public String nombre;
-  public String apellido;
+  private String codIdentificacion;
+  private String nombre;
+  private String apellido;
   private String fechaNacimiento;
   private String idSexo;
   private String idEspecie;

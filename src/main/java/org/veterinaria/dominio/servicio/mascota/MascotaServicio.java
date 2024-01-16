@@ -8,9 +8,9 @@ import org.veterinaria.aplicacion.puertos.salida.especie.IEspecieRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.mascota.IMascotaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.raza.IRazaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.vacuna.IVacunaRepositorio;
-import org.veterinaria.dominio.modelo.cliente.Cliente;
+import org.veterinaria.dominio.modelo.cliente.ClienteSalida;
 import org.veterinaria.dominio.modelo.mascota.*;
-import org.veterinaria.dominio.modelo.recordatorio.Recordatorio;
+import org.veterinaria.dominio.modelo.recordatorio.RecordatorioSalida;
 import org.veterinaria.dominio.modelo.vacuna.VacunaEntidad;
 import org.veterinaria.dominio.servicio.alergia.IAlergiaServicio;
 import org.veterinaria.dominio.servicio.sexo.ISexoServicio;
@@ -58,14 +58,14 @@ public class MascotaServicio implements IMascotaServicio {
   @Override
   public MascotaSalida obtenerMascotaPorId(String idMascota) {
     MascotaEntidad mascotaEntidad = repositorio.obtenerMascotaPorId(idMascota);
-    List<Recordatorio> recordatorios = null;
+    List<RecordatorioSalida> recordatorios = null;
     if(mascotaEntidad.getVacunas() != null && !mascotaEntidad.getVacunas().isEmpty()){
       recordatorios = obtenerRecordatorios(mascotaEntidad.getVacunas());
     }
     return getMascotaSalida(mascotaEntidad, recordatorios);
   }
 
-  public List<Recordatorio> obtenerRecordatorios(List<VacunaMascotaEntidad> vacunas) {
+  public List<RecordatorioSalida> obtenerRecordatorios(List<VacunaMascotaEntidad> vacunas) {
     return vacunas.parallelStream()
           .map(p -> {
             VacunaEntidad vs = vacunaRepositorio.obtenerVacunaPorId(p.getIdVacuna());
@@ -77,7 +77,7 @@ public class MascotaServicio implements IMascotaServicio {
             ZonedDateTime fechaFinal = fechaZDT.plus(duracionISO);
             // Convertir la fecha final a Date si es necesario
             Date fechaFinalDate = Date.from(fechaFinal.toInstant());
-            return Recordatorio.builder()
+            return RecordatorioSalida.builder()
                   .fecha(convertirFechaAString(fechaFinalDate))
                   .tipo("Vacuna")
                   .detalle(vs.getVacuna())
@@ -152,7 +152,7 @@ public class MascotaServicio implements IMascotaServicio {
     return mascotaEntidad;
   }
 
-  private MascotaSalida getMascotaSalida(MascotaEntidad mascotaEntidad, List<Recordatorio> recordatorios) {
+  private MascotaSalida getMascotaSalida(MascotaEntidad mascotaEntidad, List<RecordatorioSalida> recordatorios) {
     return MascotaSalida.builder()
           .id(mascotaEntidad.id.toString())
           .codIdentificacion(mascotaEntidad.getCodIdentificacion())
@@ -191,7 +191,7 @@ public class MascotaServicio implements IMascotaServicio {
     if (!clientes.isEmpty()) {
       clientes.forEach(p -> {
         try {
-          Cliente cliente = clienteService.getClientePorId(p);
+          ClienteSalida cliente = clienteService.getClientePorId(p);
           clientesValidos.add(p);
         } catch (WebApplicationException e) {
           if (e.getResponse().getStatus() == 404) {

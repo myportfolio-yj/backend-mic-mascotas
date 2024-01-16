@@ -1,4 +1,4 @@
 package org.veterinaria.dominio.modelo.cliente;
 
-public class Cita {
+public class RecordatorioSalida {
 }

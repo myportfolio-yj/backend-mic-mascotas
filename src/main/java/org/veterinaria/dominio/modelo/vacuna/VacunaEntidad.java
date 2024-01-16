@@ -12,8 +12,8 @@ import java.time.Duration;
 @Setter
 @MongoEntity(collection = "collect-Vacuna")
 public class VacunaEntidad extends PanacheMongoEntity {
-  public String vacuna;
-  public Boolean borrado;
+  private String vacuna;
+  private Boolean borrado;
   private String duracionISO;
 
   public long convertirDuracionDesdeISO() {

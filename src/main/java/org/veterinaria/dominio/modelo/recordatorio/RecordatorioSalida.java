@@ -1,4 +1,4 @@
-package org.veterinaria.dominio.modelo.raza;
+package org.veterinaria.dominio.modelo.recordatorio;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Raza {
-  private String id;
-  private String raza;
+public class RecordatorioSalida {
+  private String fecha;
+  private String tipo;
+  private String detalle;
 }

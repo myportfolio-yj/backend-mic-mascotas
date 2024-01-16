@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @RegisterForReflection
-public class TipoDocumento {
+public class TipoDocumentoSalida {
   private String id;
   private String tipoDocumento;
 }

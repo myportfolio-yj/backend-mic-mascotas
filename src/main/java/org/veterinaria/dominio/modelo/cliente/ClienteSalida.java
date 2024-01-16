@@ -17,16 +17,16 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @RegisterForReflection
-public class Cliente {
+public class ClienteSalida {
   private String id;
   private String nombres;
   private String apellidos;
   private String celular;
   private String fijo;
   private String email;
-  private TipoDocumento tipoDocumento;
+  private TipoDocumentoSalida tipoDocumento;
   private String documento;
   private List<MascotaSalida> mascotas;
-  private List<Cita> citas;
-  private List<Recordatorio> recordatorio;
+  private List<CitaSalida> citas;
+  private List<RecordatorioSalida> recordatorio;
 }

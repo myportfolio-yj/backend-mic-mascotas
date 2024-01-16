@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.veterinaria.dominio.modelo.raza.Raza;
+import org.veterinaria.dominio.modelo.raza.RazaMinsalida;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ import java.util.List;
 public class EspecieSalida {
   private String id;
   private String especie;
-  private List<Raza> razas;
+  private List<RazaMinsalida> razas;
 }

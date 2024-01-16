@@ -10,6 +10,6 @@ import org.bson.types.ObjectId;
 @Setter
 @MongoEntity(collection = "collect-Alergia")
 public class AlergiaEntidad extends PanacheMongoEntity {
-  public String alergia;
-  public Boolean delete;
+  private String alergia;
+  private Boolean delete;
 }

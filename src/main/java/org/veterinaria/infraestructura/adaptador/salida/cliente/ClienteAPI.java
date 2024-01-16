@@ -4,7 +4,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-import org.veterinaria.dominio.modelo.cliente.Cliente;
+import org.veterinaria.dominio.modelo.cliente.ClienteSalida;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface ClienteAPI {
   @GET
   @Path("/cliente/{idCliente}")
   @Produces(MediaType.APPLICATION_JSON)
-  Cliente getClientePorId(@PathParam("idCliente") String idCliente);
+  ClienteSalida getClientePorId(@PathParam("idCliente") String idCliente);
 
   @POST
   @Path("/cliente-mascota/{idCliente}")

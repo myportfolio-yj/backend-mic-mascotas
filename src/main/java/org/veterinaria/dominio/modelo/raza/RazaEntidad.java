@@ -4,7 +4,6 @@ import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 
 @Getter
 @Setter
@@ -14,8 +13,8 @@ public class RazaEntidad extends PanacheMongoEntity {
   private String idEspecie;
   private String raza;
 
-  public Raza getRazaClass() {
-    return Raza.builder()
+  public RazaMinsalida getRazaClass() {
+    return RazaMinsalida.builder()
           .id(this.id.toString())
           .raza(this.raza)
           .build();

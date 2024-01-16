@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VacunaMascota {
-  public static final String FORMATO_FECHA = "dd/MM/yyyy";
+  private static final String FORMATO_FECHA = "dd/MM/yyyy";
 
   private String idVacuna;
   private String fecha;

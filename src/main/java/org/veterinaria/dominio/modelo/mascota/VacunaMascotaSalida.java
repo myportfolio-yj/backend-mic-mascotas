@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VacunaMascotaSalida {
-  public static final String FORMATO_FECHA = "dd/MM/yyyy";
+  private static final String FORMATO_FECHA = "dd/MM/yyyy";
 
   private String idVacuna;
   private String fecha;
