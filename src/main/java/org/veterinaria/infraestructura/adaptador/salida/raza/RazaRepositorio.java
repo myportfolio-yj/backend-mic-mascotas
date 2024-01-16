@@ -35,6 +35,7 @@ public class RazaRepositorio implements PanacheMongoRepository<RazaEntidad>, IRa
   public RazaEntidad actualizarRaza(String idRaza, RazaEntidad raza) {
     return findByIdOptional(new ObjectId(idRaza))
           .map(p -> {
+            p.setRaza(raza.getRaza());
             p.setIdEspecie(raza.getIdEspecie());
             p.setBorrado(raza.getBorrado());
             update(p);
