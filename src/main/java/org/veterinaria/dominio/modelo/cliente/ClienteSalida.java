@@ -27,6 +27,4 @@ public class ClienteSalida {
   private TipoDocumentoSalida tipoDocumento;
   private String documento;
   private List<MascotaSalida> mascotas;
-  private List<CitaSalida> citas;
-  private List<RecordatorioSalida> recordatorio;
 }

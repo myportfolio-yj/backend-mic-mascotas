@@ -2,8 +2,6 @@ package org.veterinaria.dominio.servicio.formulario;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.veterinaria.aplicacion.puertos.salida.especie.IEspecieRepositorio;
-import org.veterinaria.aplicacion.puertos.salida.raza.IRazaRepositorio;
 import org.veterinaria.dominio.modelo.formulario.FormularioSalida;
 import org.veterinaria.dominio.servicio.alergia.IAlergiaServicio;
 import org.veterinaria.dominio.servicio.especie.IEspecieServicio;
@@ -16,6 +14,7 @@ public class FormularioServicio implements IFormularioServicio {
   private final IEspecieServicio servicioEspecie;
   private final IAlergiaServicio servicioAlergias;
   private final IVacunaServicio servicioVacunas;
+
   @Inject
   public FormularioServicio(ISexoServicio servicioSexo, IEspecieServicio servicioEspecie, IAlergiaServicio servicioAlergias, IVacunaServicio servicioVacunas) {
     this.servicioSexo = servicioSexo;

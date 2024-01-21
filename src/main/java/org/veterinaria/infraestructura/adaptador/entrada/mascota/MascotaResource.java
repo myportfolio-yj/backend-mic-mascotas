@@ -8,15 +8,16 @@ import org.veterinaria.aplicacion.puertos.entrada.mascota.IMascotaResource;
 import org.veterinaria.dominio.modelo.mascota.MascotaActualizar;
 import org.veterinaria.dominio.modelo.mascota.MascotaCrear;
 import org.veterinaria.dominio.modelo.mascota.MascotaSalida;
-import org.veterinaria.dominio.servicio.formulario.IFormularioServicio;
 import org.veterinaria.dominio.servicio.mascota.IMascotaServicio;
 
 public class MascotaResource implements IMascotaResource {
   private final IMascotaServicio servicio;
+
   @Inject
   public MascotaResource(IMascotaServicio servicio) {
     this.servicio = servicio;
   }
+
   @Override
   public Response putMascota(@NotNull String idMascota, @Valid MascotaActualizar mascota) {
     MascotaSalida mascotaActualizado = servicio.actualizarMascota(idMascota, mascota);

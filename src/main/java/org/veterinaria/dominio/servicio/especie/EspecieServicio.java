@@ -2,7 +2,6 @@ package org.veterinaria.dominio.servicio.especie;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.veterinaria.aplicacion.puertos.salida.alergia.IAlergiaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.especie.IEspecieRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.raza.IRazaRepositorio;
 import org.veterinaria.dominio.modelo.especie.EspecieEntidad;
@@ -16,11 +15,13 @@ import java.util.List;
 public class EspecieServicio implements IEspecieServicio {
   private final IEspecieRepositorio repositorio;
   private final IRazaRepositorio repositorioRaza;
+
   @Inject
   public EspecieServicio(IEspecieRepositorio repositorio, IRazaRepositorio repositorioRaza) {
     this.repositorio = repositorio;
     this.repositorioRaza = repositorioRaza;
   }
+
   @Override
   public EspecieSalida actualizarEspecie(String idEspecie, EspecieEntrada especie) {
     EspecieEntidad especieEntidad = new EspecieEntidad();

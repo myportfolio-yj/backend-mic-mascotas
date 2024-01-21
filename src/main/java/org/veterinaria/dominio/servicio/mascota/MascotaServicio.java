@@ -4,7 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.veterinaria.aplicacion.puertos.salida.alergia.IAlergiaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.especie.IEspecieRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.mascota.IMascotaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.raza.IRazaRepositorio;
@@ -44,12 +43,12 @@ public class MascotaServicio implements IMascotaServicio {
 
   @Inject
   public MascotaServicio(IMascotaRepositorio repositorio,
-ISexoServicio servicioSexo,
-      IEspecieRepositorio repositorioEspecie,
-      IRazaRepositorio repositorioRaza,
-      IAlergiaServicio servicioAlergias,
-      IVacunaServicio servicioVacunas,
-      IVacunaRepositorio vacunaRepositorio, @RestClient ClienteAPI clienteService) {
+                         ISexoServicio servicioSexo,
+                         IEspecieRepositorio repositorioEspecie,
+                         IRazaRepositorio repositorioRaza,
+                         IAlergiaServicio servicioAlergias,
+                         IVacunaServicio servicioVacunas,
+                         IVacunaRepositorio vacunaRepositorio, @RestClient ClienteAPI clienteService) {
     this.repositorio = repositorio;
     this.servicioSexo = servicioSexo;
     this.repositorioEspecie = repositorioEspecie;

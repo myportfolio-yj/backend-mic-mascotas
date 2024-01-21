@@ -7,15 +7,16 @@ import jakarta.ws.rs.core.Response;
 import org.veterinaria.aplicacion.puertos.entrada.vacuna.IVacunaResource;
 import org.veterinaria.dominio.modelo.vacuna.VacunaEntrada;
 import org.veterinaria.dominio.modelo.vacuna.VacunaSalida;
-import org.veterinaria.dominio.servicio.sexo.ISexoServicio;
 import org.veterinaria.dominio.servicio.vacuna.IVacunaServicio;
 
 public class VacunaResource implements IVacunaResource {
   private final IVacunaServicio servicio;
+
   @Inject
   public VacunaResource(IVacunaServicio servicio) {
     this.servicio = servicio;
   }
+
   @Override
   public Response putVacuna(@NotNull String idVacuna, @Valid VacunaEntrada vacuna) {
     VacunaSalida vacunaActualizado = servicio.actualizarVacuna(idVacuna, vacuna);

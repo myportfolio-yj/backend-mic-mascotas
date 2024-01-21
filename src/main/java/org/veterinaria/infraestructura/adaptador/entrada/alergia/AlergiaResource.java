@@ -5,13 +5,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
 import org.veterinaria.aplicacion.puertos.entrada.alergia.IAlergiaResource;
-import org.veterinaria.aplicacion.puertos.salida.alergia.IAlergiaRepositorio;
 import org.veterinaria.dominio.modelo.alergia.AlergiaEntrada;
 import org.veterinaria.dominio.modelo.alergia.AlergiaSalida;
 import org.veterinaria.dominio.servicio.alergia.IAlergiaServicio;
 
 public class AlergiaResource implements IAlergiaResource {
   private final IAlergiaServicio servicio;
+
   @Inject
   public AlergiaResource(IAlergiaServicio servicio) {
     this.servicio = servicio;
