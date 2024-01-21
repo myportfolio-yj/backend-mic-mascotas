@@ -30,6 +30,8 @@ import java.util.List;
 @ApplicationScoped
 public class MascotaServicio implements IMascotaServicio {
   public static final String FORMATO_FECHA = "dd/MM/yyyy";
+  public static final String FECHA_INVALDIA = "Fecha invalida";
+  public static final String VACUNA = "Vacuna";
   @Inject
   IMascotaRepositorio repositorio;
   @Inject
@@ -52,14 +54,14 @@ public class MascotaServicio implements IMascotaServicio {
   public List<MascotaSalida> obtenerMascota() {
     List<MascotaEntidad> mascotas = repositorio.obtenerTodosMascota();
     return mascotas.parallelStream().map(p ->
-          getMascotaSalida(p,null)).toList();
+          getMascotaSalida(p, null)).toList();
   }
 
   @Override
   public MascotaSalida obtenerMascotaPorId(String idMascota) {
     MascotaEntidad mascotaEntidad = repositorio.obtenerMascotaPorId(idMascota);
     List<RecordatorioSalida> recordatorios = null;
-    if(mascotaEntidad.getVacunas() != null && !mascotaEntidad.getVacunas().isEmpty()){
+    if (mascotaEntidad.getVacunas() != null && !mascotaEntidad.getVacunas().isEmpty()) {
       recordatorios = obtenerRecordatorios(mascotaEntidad.getVacunas());
     }
     return getMascotaSalida(mascotaEntidad, recordatorios);
@@ -69,17 +71,13 @@ public class MascotaServicio implements IMascotaServicio {
     return vacunas.parallelStream()
           .map(p -> {
             VacunaEntidad vs = vacunaRepositorio.obtenerVacunaPorId(p.getIdVacuna());
-            // Convertir la fecha a ZonedDateTime
             ZonedDateTime fechaZDT = p.getFecha().toInstant().atZone(ZoneId.systemDefault());
-            // Parsear la duración
             Duration duracionISO = Duration.parse(vs.getDuracionISO());
-            // Sumar la duración a la fecha
             ZonedDateTime fechaFinal = fechaZDT.plus(duracionISO);
-            // Convertir la fecha final a Date si es necesario
             Date fechaFinalDate = Date.from(fechaFinal.toInstant());
             return RecordatorioSalida.builder()
                   .fecha(convertirFechaAString(fechaFinalDate))
-                  .tipo("Vacuna")
+                  .tipo(VACUNA)
                   .detalle(vs.getVacuna())
                   .build();
           })
@@ -93,34 +91,34 @@ public class MascotaServicio implements IMascotaServicio {
 
   @Override
   public MascotaSalida crearMascota(MascotaCrear mascota) {
-    List<String> clientesValidos;
-    clientesValidos = validarClientesIds(mascota.getClientes());
-    if (!mascota.getVacunas().isEmpty()) {
-      mascota.getVacunas().forEach(p -> {
-        if (p.fechaInvalida()) throw new RuntimeException("Fecha invalida");
-      });
-    }
-    MascotaEntidad mascotaEntidad = crearMascotaEntidad(mascota.getNombre(), mascota.getApellido(),
-          mascota.getFechaNacimiento(), mascota.getIdSexo(), mascota.getIdEspecie(), mascota.getIdRaza(),
-          mascota.getEsterilizado(), mascota.getAlergias(), mascota.getVacunas(), clientesValidos);
+    MascotaEntidad mascotaEntidad = validaGeneraMascotaEntidad(mascota.getClientes(), mascota.getVacunas(), mascota.getNombre(),
+          mascota.getApellido(), mascota.getFechaNacimiento(), mascota.getIdSexo(), mascota.getIdEspecie(),
+          mascota.getIdRaza(), mascota.getEsterilizado(), mascota.getAlergias());
     mascotaEntidad = repositorio.crearMascota(mascotaEntidad);
     agregarMascotaAlUsuario(mascota.getClientes(), mascotaEntidad.id.toString());
 
     return this.obtenerMascotaPorId(mascotaEntidad.id.toString());
   }
 
-  @Override
-  public MascotaSalida actualizarMascota(String idMascota, MascotaActualizar mascota) {
-    List<String> clientesValidos;
-    clientesValidos = validarClientesIds(mascota.getClientes());
-    if (!mascota.getVacunas().isEmpty()) {
-      mascota.getVacunas().forEach(p -> {
-        if (p.fechaInvalida()) throw new RuntimeException("Fecha invalida");
+  private MascotaEntidad validaGeneraMascotaEntidad(List<String> clientes, List<VacunaMascota> vacunas, String nombre,
+                                                    String apellido, String fechaNacimiento, String idSexo, String idEspecie,
+                                                    String idRaza, Boolean esterilizado, List<String> alergias) {
+    List<String> clientesValidos = validarClientesIds(clientes);
+    if (!vacunas.isEmpty()) {
+      vacunas.forEach(p -> {
+        if (p.fechaInvalida()) throw new RuntimeException(FECHA_INVALDIA);
       });
     }
-    MascotaEntidad mascotaEntidad = crearMascotaEntidad(mascota.getNombre(), mascota.getApellido(),
-          mascota.getFechaNacimiento(), mascota.getIdSexo(), mascota.getIdEspecie(), mascota.getIdRaza(),
-          mascota.getEsterilizado(), mascota.getAlergias(), mascota.getVacunas(), clientesValidos);
+    return crearMascotaEntidad(nombre, apellido,
+          fechaNacimiento, idSexo, idEspecie, idRaza,
+          esterilizado, alergias, vacunas, clientesValidos);
+  }
+
+  @Override
+  public MascotaSalida actualizarMascota(String idMascota, MascotaActualizar mascota) {
+    MascotaEntidad mascotaEntidad = validaGeneraMascotaEntidad(mascota.getClientes(), mascota.getVacunas(), mascota.getNombre(),
+          mascota.getApellido(), mascota.getFechaNacimiento(), mascota.getIdSexo(), mascota.getIdEspecie(),
+          mascota.getIdRaza(), mascota.getEsterilizado(), mascota.getAlergias());
     repositorio.actualizarMascota(idMascota, mascotaEntidad);
     agregarMascotaAlUsuario(mascota.getClientes(), idMascota);
     return this.obtenerMascotaPorId(idMascota);
@@ -173,17 +171,23 @@ public class MascotaServicio implements IMascotaServicio {
           )
           .vacunas(
                 (mascotaEntidad.getVacunas() == null || mascotaEntidad.getVacunas().isEmpty()) ? null :
-                      mascotaEntidad.getVacunas().parallelStream()
-                            .map(p -> VacunaMascotaSalida.builder()
-                                  .idVacuna(p.getIdVacuna())
-                                  .vacuna(servicioVacunas.obtenerVacunaPorId(p.getIdVacuna()).getVacuna())
-                                  .fecha(p.convertirFechaAString())
-                                  .build())
-                            .toList()
+                      getVacuna(mascotaEntidad.getVacunas())
           )
           .recordatorios(recordatorios)
-          .clientes(mascotaEntidad.getClientes())
+          .clientes(mascotaEntidad.getClientes().parallelStream().map(
+                clienteService::getClienteMinPorId
+          ).toList())
           .build();
+  }
+
+  private List<VacunaMascotaSalida> getVacuna(List<VacunaMascotaEntidad> vacuna) {
+    return vacuna.parallelStream()
+          .map(p -> VacunaMascotaSalida.builder()
+                .idVacuna(p.getIdVacuna())
+                .vacuna(servicioVacunas.obtenerVacunaPorId(p.getIdVacuna()).getVacuna())
+                .fecha(p.convertirFechaAString())
+                .build())
+          .toList();
   }
 
   private List<String> validarClientesIds(List<String> clientes) {

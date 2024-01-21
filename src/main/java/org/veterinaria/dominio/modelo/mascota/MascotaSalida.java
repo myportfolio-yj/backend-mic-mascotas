@@ -32,7 +32,7 @@ public class MascotaSalida {
   private Boolean esterilizado;
   private List<AlergiaSalida> alergias;
   private List<VacunaMascotaSalida> vacunas;
-  private List<String> clientes;
+  private List<ClienteMinSalida> clientes;
   private List<RecordatorioSalida> recordatorios;
   private String foto;
   private String qr;
