@@ -11,8 +11,11 @@ import java.util.List;
 
 @ApplicationScoped
 public class AlergiaServicio implements IAlergiaServicio {
+  private final IAlergiaRepositorio repositorio;
   @Inject
-  IAlergiaRepositorio repositorio;
+  public AlergiaServicio(IAlergiaRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
 
   @Override
   public AlergiaSalida actualizarAlergia(String idAlergia, AlergiaEntrada alergia) {

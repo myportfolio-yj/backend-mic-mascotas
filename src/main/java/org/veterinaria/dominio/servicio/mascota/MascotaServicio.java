@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.veterinaria.aplicacion.puertos.salida.alergia.IAlergiaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.especie.IEspecieRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.mascota.IMascotaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.raza.IRazaRepositorio;
@@ -32,23 +33,32 @@ public class MascotaServicio implements IMascotaServicio {
   public static final String FORMATO_FECHA = "dd/MM/yyyy";
   public static final String FECHA_INVALDIA = "Fecha invalida";
   public static final String VACUNA = "Vacuna";
+  private final IMascotaRepositorio repositorio;
+  private final ISexoServicio servicioSexo;
+  private final IEspecieRepositorio repositorioEspecie;
+  private final IRazaRepositorio repositorioRaza;
+  private final IAlergiaServicio servicioAlergias;
+  private final IVacunaServicio servicioVacunas;
+  private final IVacunaRepositorio vacunaRepositorio;
+  private final ClienteAPI clienteService;
+
   @Inject
-  IMascotaRepositorio repositorio;
-  @Inject
-  ISexoServicio servicioSexo;
-  @Inject
-  IEspecieRepositorio repositorioEspecie;
-  @Inject
-  IRazaRepositorio repositorioRaza;
-  @Inject
-  IAlergiaServicio servicioAlergias;
-  @Inject
-  IVacunaServicio servicioVacunas;
-  @Inject
-  IVacunaRepositorio vacunaRepositorio;
-  @Inject
-  @RestClient
-  ClienteAPI clienteService;
+  public MascotaServicio(IMascotaRepositorio repositorio,
+ISexoServicio servicioSexo,
+      IEspecieRepositorio repositorioEspecie,
+      IRazaRepositorio repositorioRaza,
+      IAlergiaServicio servicioAlergias,
+      IVacunaServicio servicioVacunas,
+      IVacunaRepositorio vacunaRepositorio, @RestClient ClienteAPI clienteService) {
+    this.repositorio = repositorio;
+    this.servicioSexo = servicioSexo;
+    this.repositorioEspecie = repositorioEspecie;
+    this.repositorioRaza = repositorioRaza;
+    this.servicioAlergias = servicioAlergias;
+    this.servicioVacunas = servicioVacunas;
+    this.vacunaRepositorio = vacunaRepositorio;
+    this.clienteService = clienteService;
+  }
 
   @Override
   public List<MascotaSalida> obtenerMascota() {

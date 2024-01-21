@@ -5,12 +5,15 @@ import jakarta.ws.rs.core.Response;
 import org.veterinaria.aplicacion.puertos.entrada.especie.IEspecieResource;
 import org.veterinaria.dominio.modelo.especie.EspecieEntrada;
 import org.veterinaria.dominio.modelo.especie.EspecieSalida;
+import org.veterinaria.dominio.servicio.alergia.IAlergiaServicio;
 import org.veterinaria.dominio.servicio.especie.IEspecieServicio;
 
 public class EspecieResource implements IEspecieResource {
+  private final IEspecieServicio servicio;
   @Inject
-  IEspecieServicio servicio;
-
+  public EspecieResource(IEspecieServicio servicio) {
+    this.servicio = servicio;
+  }
   @Override
   public Response putEspecie(String idEspecie, EspecieEntrada especie) {
     EspecieSalida especieActualizado = servicio.actualizarEspecie(idEspecie, especie);

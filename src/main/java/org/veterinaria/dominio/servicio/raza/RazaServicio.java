@@ -2,6 +2,7 @@ package org.veterinaria.dominio.servicio.raza;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.veterinaria.aplicacion.puertos.salida.alergia.IAlergiaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.especie.IEspecieRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.raza.IRazaRepositorio;
 import org.veterinaria.dominio.modelo.raza.RazaEntidad;
@@ -12,11 +13,13 @@ import java.util.List;
 
 @ApplicationScoped
 public class RazaServicio implements IRazaServicio {
+  private final IRazaRepositorio repositorio;
+  private final IEspecieRepositorio repositorioEspecie;
   @Inject
-  IRazaRepositorio repositorio;
-  @Inject
-  IEspecieRepositorio repositorioEspecie;
-
+  public RazaServicio(IRazaRepositorio repositorio, IEspecieRepositorio repositorioEspecie) {
+    this.repositorio = repositorio;
+    this.repositorioEspecie = repositorioEspecie;
+  }
   @Override
   public RazaSalida actualizarRaza(String idRaza, RazaEntrada raza) {
     RazaEntidad razaEntidad = new RazaEntidad();

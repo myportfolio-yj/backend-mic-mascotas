@@ -7,12 +7,15 @@ import jakarta.ws.rs.core.Response;
 import org.veterinaria.aplicacion.puertos.entrada.sexo.ISexoResource;
 import org.veterinaria.dominio.modelo.sexo.SexoEntrada;
 import org.veterinaria.dominio.modelo.sexo.SexoSalida;
+import org.veterinaria.dominio.servicio.raza.IRazaServicio;
 import org.veterinaria.dominio.servicio.sexo.ISexoServicio;
 
 public class SexoResource implements ISexoResource {
+  private final ISexoServicio servicio;
   @Inject
-  ISexoServicio servicio;
-
+  public SexoResource(ISexoServicio servicio) {
+    this.servicio = servicio;
+  }
   @Override
   public Response putSexo(@NotNull String idSexo, @Valid SexoEntrada sexo) {
     SexoSalida sexoActualizado = servicio.actualizarSexo(idSexo, sexo);

@@ -2,6 +2,7 @@ package org.veterinaria.dominio.servicio.sexo;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.veterinaria.aplicacion.puertos.salida.alergia.IAlergiaRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.sexo.ISexoRepositorio;
 import org.veterinaria.dominio.modelo.sexo.SexoEntidad;
 import org.veterinaria.dominio.modelo.sexo.SexoEntrada;
@@ -11,9 +12,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class SexoServicio implements ISexoServicio {
-  @Inject
-  ISexoRepositorio repositorio;
 
+  private final ISexoRepositorio repositorio;
+  @Inject
+  public SexoServicio(ISexoRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
   @Override
   public SexoSalida actualizarSexo(String idSexo, SexoEntrada sexo) {
     SexoEntidad sexoEntidad = new SexoEntidad();

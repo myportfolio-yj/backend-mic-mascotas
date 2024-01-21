@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @MongoEntity(collection = "collect-Raza")
 public class RazaEntidad extends PanacheMongoEntity {
-  public Boolean borrado;
+  private Boolean borrado;
   private String idEspecie;
   private String raza;
 

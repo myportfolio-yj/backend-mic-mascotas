@@ -2,6 +2,7 @@ package org.veterinaria.dominio.servicio.vacuna;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.veterinaria.aplicacion.puertos.salida.sexo.ISexoRepositorio;
 import org.veterinaria.aplicacion.puertos.salida.vacuna.IVacunaRepositorio;
 import org.veterinaria.dominio.modelo.vacuna.VacunaEntidad;
 import org.veterinaria.dominio.modelo.vacuna.VacunaEntrada;
@@ -11,9 +12,11 @@ import java.util.List;
 
 @ApplicationScoped
 public class VacunaServicio implements IVacunaServicio {
+  private final IVacunaRepositorio repositorio;
   @Inject
-  IVacunaRepositorio repositorio;
-
+  public VacunaServicio(IVacunaRepositorio repositorio) {
+    this.repositorio = repositorio;
+  }
   @Override
   public VacunaSalida actualizarVacuna(String idVacuna, VacunaEntrada vacuna) {
     VacunaEntidad vacunaEntidad = new VacunaEntidad();

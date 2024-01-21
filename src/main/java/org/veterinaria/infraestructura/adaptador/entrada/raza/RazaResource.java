@@ -5,12 +5,15 @@ import jakarta.ws.rs.core.Response;
 import org.veterinaria.aplicacion.puertos.entrada.raza.IRazaResource;
 import org.veterinaria.dominio.modelo.raza.RazaEntrada;
 import org.veterinaria.dominio.modelo.raza.RazaSalida;
+import org.veterinaria.dominio.servicio.mascota.IMascotaServicio;
 import org.veterinaria.dominio.servicio.raza.IRazaServicio;
 
 public class RazaResource implements IRazaResource {
+  private final IRazaServicio servicio;
   @Inject
-  IRazaServicio servicio;
-
+  public RazaResource(IRazaServicio servicio) {
+    this.servicio = servicio;
+  }
   @Override
   public Response putRaza(String idRaza, RazaEntrada raza) {
     RazaSalida razaActualizado = servicio.actualizarRaza(idRaza, raza);
