@@ -12,6 +12,7 @@ import org.veterinaria.dominio.modelo.cliente.ClienteSalida;
 import org.veterinaria.dominio.modelo.mascota.*;
 import org.veterinaria.dominio.modelo.recordatorio.RecordatorioSalida;
 import org.veterinaria.dominio.modelo.vacuna.VacunaEntidad;
+import org.veterinaria.dominio.modelo.vacuna.VacunaSalida;
 import org.veterinaria.dominio.servicio.alergia.IAlergiaServicio;
 import org.veterinaria.dominio.servicio.sexo.ISexoServicio;
 import org.veterinaria.dominio.servicio.vacuna.IVacunaServicio;
@@ -191,11 +192,15 @@ public class MascotaServicio implements IMascotaServicio {
 
   private List<VacunaMascotaSalida> getVacuna(List<VacunaMascotaEntidad> vacuna) {
     return vacuna.parallelStream()
-          .map(p -> VacunaMascotaSalida.builder()
-                .idVacuna(p.getIdVacuna())
-                .vacuna(servicioVacunas.obtenerVacunaPorId(p.getIdVacuna()).getVacuna())
-                .fecha(p.convertirFechaAString())
-                .build())
+          .map(p -> {
+            VacunaSalida vacunaSalida = servicioVacunas.obtenerVacunaPorId(p.getIdVacuna());
+            return VacunaMascotaSalida.builder()
+                  .idVacuna(p.getIdVacuna())
+                  .vacuna(vacunaSalida.getVacuna())
+                  .fecha(p.convertirFechaAString())
+                  .duracion(vacunaSalida.getDuracion())
+                  .build();
+          })
           .toList();
   }
 

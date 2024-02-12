@@ -17,4 +17,5 @@ public class VacunaMascotaSalida {
   private String idVacuna;
   private String fecha;
   private String vacuna;
+  private Long duracion;
 }
