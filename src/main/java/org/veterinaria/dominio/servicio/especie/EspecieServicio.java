@@ -75,6 +75,7 @@ public class EspecieServicio implements IEspecieServicio {
           .razas(
                 repositorioRaza.findByEspecie(especieEntidad.id.toString())
                       .parallelStream()
+                      .filter(p -> (p.getBorrado() == null || !p.getBorrado()) )
                       .map(RazaEntidad::getRazaClass)
                       .toList())
           .build()).toList();
