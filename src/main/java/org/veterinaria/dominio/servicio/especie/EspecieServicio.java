@@ -43,7 +43,10 @@ public class EspecieServicio implements IEspecieServicio {
     EspecieEntidad especieEntidad = repositorio.eliminarEspecie(idEspecie);
     return EspecieSalida.builder()
           .id(especieEntidad.id.toString())
-          .especie(especieEntidad.getEspecie())
+          .especie(
+                especieEntidad.getEspecie().substring(0, 1).toUpperCase() +
+                      especieEntidad.getEspecie().substring(1).toLowerCase()
+          )
           .razas(
                 repositorioRaza.findByEspecie(especieEntidad.id.toString())
                       .parallelStream()
@@ -57,7 +60,10 @@ public class EspecieServicio implements IEspecieServicio {
     EspecieEntidad especieEntidad = repositorio.obtenerEspeciePorId(idEspecie);
     return EspecieSalida.builder()
           .id(especieEntidad.id.toString())
-          .especie(especieEntidad.getEspecie())
+          .especie(
+                especieEntidad.getEspecie().substring(0, 1).toUpperCase() +
+                      especieEntidad.getEspecie().substring(1).toLowerCase()
+          )
           .razas(
                 repositorioRaza.findByEspecie(especieEntidad.id.toString())
                       .parallelStream()
@@ -71,7 +77,10 @@ public class EspecieServicio implements IEspecieServicio {
     List<EspecieEntidad> especies = repositorio.obtenerTodosEspecie();
     return especies.parallelStream().map(especieEntidad -> EspecieSalida.builder()
           .id(especieEntidad.id.toString())
-          .especie(especieEntidad.getEspecie())
+          .especie(
+                especieEntidad.getEspecie().substring(0, 1).toUpperCase() +
+                      especieEntidad.getEspecie().substring(1).toLowerCase()
+          )
           .razas(
                 repositorioRaza.findByEspecie(especieEntidad.id.toString())
                       .parallelStream()

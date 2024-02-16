@@ -14,9 +14,15 @@ public class RazaEntidad extends PanacheMongoEntity {
   private String raza;
 
   public RazaMinsalida getRazaClass() {
+    StringBuilder cadenaFormateada = new StringBuilder();
     return RazaMinsalida.builder()
           .id(this.id.toString())
-          .raza(this.raza)
+          .raza(
+                cadenaFormateada
+                      .append(this.raza.substring(0, 1).toUpperCase())
+                      .append(this.raza.substring(1).toLowerCase())
+                      .toString()
+          )
           .build();
   }
 }
