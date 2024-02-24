@@ -103,7 +103,7 @@ public class MascotaServicio implements IMascotaServicio {
   public MascotaSalida crearMascota(MascotaCrear mascota) {
     MascotaEntidad mascotaEntidad = validaGeneraMascotaEntidad(mascota.getClientes(), mascota.getVacunas(), mascota.getNombre(),
           mascota.getApellido(), mascota.getFechaNacimiento(), mascota.getIdSexo(), mascota.getIdEspecie(),
-          mascota.getIdRaza(), mascota.getEsterilizado(), mascota.getAlergias());
+          mascota.getIdRaza(), mascota.getEsterilizado(), mascota.getAlergias(), mascota.getNombre());
     mascotaEntidad = repositorio.crearMascota(mascotaEntidad);
     agregarMascotaAlUsuario(mascota.getClientes(), mascotaEntidad.id.toString());
 
@@ -112,7 +112,7 @@ public class MascotaServicio implements IMascotaServicio {
 
   private MascotaEntidad validaGeneraMascotaEntidad(List<String> clientes, List<VacunaMascota> vacunas, String nombre,
                                                     String apellido, String fechaNacimiento, String idSexo, String idEspecie,
-                                                    String idRaza, Boolean esterilizado, List<String> alergias) {
+                                                    String idRaza, Boolean esterilizado, List<String> alergias, String foto) {
     List<String> clientesValidos = validarClientesIds(clientes);
     if (!vacunas.isEmpty()) {
       vacunas.forEach(p -> {
@@ -121,14 +121,14 @@ public class MascotaServicio implements IMascotaServicio {
     }
     return crearMascotaEntidad(nombre, apellido,
           fechaNacimiento, idSexo, idEspecie, idRaza,
-          esterilizado, alergias, vacunas, clientesValidos);
+          esterilizado, alergias, vacunas, clientesValidos, foto);
   }
 
   @Override
   public MascotaSalida actualizarMascota(String idMascota, MascotaActualizar mascota) {
     MascotaEntidad mascotaEntidad = validaGeneraMascotaEntidad(mascota.getClientes(), mascota.getVacunas(), mascota.getNombre(),
           mascota.getApellido(), mascota.getFechaNacimiento(), mascota.getIdSexo(), mascota.getIdEspecie(),
-          mascota.getIdRaza(), mascota.getEsterilizado(), mascota.getAlergias());
+          mascota.getIdRaza(), mascota.getEsterilizado(), mascota.getAlergias(), mascota.getFoto());
     repositorio.actualizarMascota(idMascota, mascotaEntidad);
     agregarMascotaAlUsuario(mascota.getClientes(), idMascota);
     return this.obtenerMascotaPorId(idMascota);
@@ -140,7 +140,9 @@ public class MascotaServicio implements IMascotaServicio {
     return getMascotaSalida(mascotaEntidad, null);
   }
 
-  private MascotaEntidad crearMascotaEntidad(String nombre, String apellido, String fechaNacimiento, String idSexo, String idEspecie, String idRaza, Boolean esterilizado, List<String> alergias, List<VacunaMascota> vacunas, List<String> clientes) {
+  private MascotaEntidad crearMascotaEntidad(String nombre, String apellido, String fechaNacimiento, String idSexo,
+                                             String idEspecie, String idRaza, Boolean esterilizado, List<String> alergias,
+                                             List<VacunaMascota> vacunas, List<String> clientes, String foto) {
     MascotaEntidad mascotaEntidad = new MascotaEntidad();
     mascotaEntidad.setNombre(nombre);
     mascotaEntidad.setApellido(apellido);
@@ -156,7 +158,7 @@ public class MascotaServicio implements IMascotaServicio {
           .build()).toList();
     mascotaEntidad.setVacunas(vacunaMascotaEntidad);
     mascotaEntidad.setClientes(clientes);
-    mascotaEntidad.setFoto(nombre);
+    mascotaEntidad.setFoto(foto);
     return mascotaEntidad;
   }
 
